@@ -1,13 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.keyboard-grid {
+  grid-template-areas:
+    "lb rb rb"
+    "lb kb kb"
+    "np kb kb";
+}
+
+.lb {
+  grid-area: lb;
+}
+
+.rb {
+  grid-area: rb;
+}
+
+.kb {
+  grid-area: kb;
+}
+
+.np {
+  grid-area: np;
+}
+
+@layer components {
+  .scl {
+    @apply bg-black grid px-2 content-center items-center;
+  }
+}
+
+@layer utilities {
+  .text-xxs {
+    font-size: 0.6rem /* 12px */;
+    line-height: 1rem /* 16px */;
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .animation-blink {
+    animation: blink 300ms cubic-bezier(0.24, -0.18, 1, -1.18) infinite;
+  }
 }
