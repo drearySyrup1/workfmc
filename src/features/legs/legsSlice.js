@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { act } from "react-dom/test-utils";
 import { Time } from "../../utils";
 import { stops } from "../../placeholderdata";
 
@@ -136,12 +135,26 @@ export const legsSlice = createSlice({
     },
     insertStop: (state, action) => {
       const { insertIndex, item } = action.payload;
-      state.stops.splice(insertIndex, 0, item);
+      const stopAtInsertIndexListPostion =
+        state.stops[insertIndex].listPosition;
+
+      const stopToInsert = {
+        ...item,
+        listPosition: stopAtInsertIndexListPostion,
+      };
+
       state.stops = state.stops.map((item, i) => {
-        return { ...item, listPosition: i };
+        if (item.listPosition >= stopAtInsertIndexListPostion) {
+          return { ...item, listPosition: item.listPosition + 1 };
+        } else {
+          return { ...item, listPosition: i };
+        }
       });
+
+      state.stops.splice(insertIndex, 0, stopToInsert);
     },
     swapItems: (state, action) => {
+      // some checks if stops exists before moving them
       if (!state.stops[state.itemToMove] || !state.stops[action.payload])
         return;
       // if item to move is present in state than swap it with the next pressed one
